@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flores para ti</title>
+  <style>
+    body{
+      margin:0;
+      height:100vh;
+      background: linear-gradient(180deg, #05030a 0%, #0a0920 100%);
+      font-family: 'Arial', sans-serif;
+      color:#fff;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      text-align:center;
+    }
+    .container{
+      max-width:900px;
+      width:100%;
+      position:relative;
+      z-index:2;
+    }
+    h1{
+      font-size:22px;
+      line-height:1.4;
+      margin:20px 0;
+      font-weight:600;
+      text-shadow:0 6px 18px rgba(0,0,0,0.7);
+    }
+    .flor-grande{
+      font-size:160px;
+      display:inline-block;
+      animation:flotar 3.5s ease-in-out infinite;
+      filter:drop-shadow(0 12px 20px rgba(0,0,0,0.6));
+      margin-bottom:10px;
+    }
+    @keyframes flotar{
+      0%{ transform:translateY(0) rotate(-3deg) scale(1); }
+      50%{ transform:translateY(-18px) rotate(3deg) scale(1.06); }
+      100%{ transform:translateY(0) rotate(-3deg) scale(1); }
+    }
+    .flores{
+      margin-top:8px;
+    }
+    .flor-peq{
+      font-size:48px;
+      margin:0 6px;
+      animation:latir 2s infinite;
+    }
+    @keyframes latir{
+      0%,100%{ transform:scale(1); }
+      50%{ transform:scale(1.15); }
+    }
+    .estrella{
+      position:fixed;
+      top:-10vh;
+      width:3px;
+      height:3px;
+      border-radius:50%;
+      background:linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0.6));
+      opacity:0.95;
+      pointer-events:none;
+      z-index:1;
+      box-shadow:0 0 6px rgba(255,255,255,0.9);
+    }
+    @keyframes caer-izq-der{
+      0%{ transform:translate3d(0,-10vh,0) translateX(0) rotate(0deg); opacity:1; }
+      100%{ transform:translate3d(80vw,110vh,0) rotate(360deg); opacity:0; }
+    }
+    .vignette{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.03), transparent 30%),
+                  radial-gradient(ellipse at 80% 70%, rgba(255,255,255,0.02), transparent 20%);
+      z-index:0;
+    }
+    @media(max-width:480px){
+      .flor-grande{ font-size:120px; }
+      h1{ font-size:18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="flor-grande">🌻</div>
+    <h1 id="mensaje"></h1>
+    <div class="flores">
+      <span class="flor-peq">🌻</span>
+      <span class="flor-peq">🌼</span>
+      <span class="flor-peq">🌷</span>
+      <span class="flor-peq">💐</span>
+      <span class="flor-peq">🌸</span>
+    </div>
+  </div>
+  <div class="vignette"></div>
+  <script>
+    // Estrellas en diagonal
+    const total = 28;
+    for(let i=0;i<total;i++){
+      const s=document.createElement('div');
+      s.className='estrella';
+      const startLeft=Math.random()*15-5;
+      s.style.left=startLeft+'vw';
+      const size=1+Math.random()*4;
+      s.style.width=size+'px';
+      s.style.height=size+'px';
+      const dur=4+Math.random()*6;
+      const delay=Math.random()*6;
+      s.style.animation=`caer-izq-der ${dur}s linear ${delay}s infinite`;
+      s.style.opacity=0.6+Math.random()*0.4;
+      document.body.appendChild(s);
+    }
+
+    // Preguntar nombre y mostrar mensaje
+    let nombre=prompt("🌸 ¿Cuál es tu nombre?");
+    if(!nombre) nombre="persona especial";
+    document.getElementById("mensaje").innerText =
+      "Estas flores son un pequeño gesto para una gran persona como tú, eres especial en este mundo, hermosa 🥰 " + nombre;
+  </script>
+</body>
+</html>
